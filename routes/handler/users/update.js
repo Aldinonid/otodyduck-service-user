@@ -1,5 +1,6 @@
 const { User } = require("../../../models");
 
+const Op = require("sequelize").Op;
 const bcrypt = require("bcrypt");
 const Validator = require("fastest-validator");
 const v = new Validator();
@@ -26,9 +27,24 @@ module.exports = async (req, res) => {
     return res.status(404).json({ status: "error", message: "User not Found" });
   }
 
+  //? Syntax manual query will be "SELECT * FROM users WHERE email = user.email AND id != user.id"
   const isEmailExist = await User.findOne({
-    where: { email: data.email },
+    where: {
+      [Op.and]: [
+        {
+          email: {
+            [Op.eq]: user.email,
+          },
+        },
+        {
+          id: {
+            [Op.ne]: user.id,
+          },
+        },
+      ],
+    },
   });
+
   if (isEmailExist) {
     return res
       .status(409)

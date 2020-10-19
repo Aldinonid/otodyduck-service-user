@@ -8,6 +8,8 @@ router.put("/:id", userHandler.update);
 router.get("/:id", userHandler.getUser);
 router.get("/", userHandler.getAllUsers);
 
+router.delete("/:id", userHandler.destroy);
+
 router.post("/login", userHandler.login);
 
 router.post("/logout", userHandler.logout);
