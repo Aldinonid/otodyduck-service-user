@@ -12,9 +12,10 @@ module.exports = async (req, res) => {
   const schema = {
     name: "string|empty:false",
     email: "email|empty:false",
-    password: "string|trim|min:6",
+    password: "string|trim|min:6|optional",
     job: "string|optional",
     avatar: "string|optional",
+    role: { type: "enum", values: ["teacher", "student", "admin"] },
   };
 
   const validate = v.validate(data, schema);
@@ -51,12 +52,12 @@ module.exports = async (req, res) => {
       .json({ status: "error", message: "Email already exist" });
   }
 
-  const password = await bcrypt.hash(data.password, 10);
+  if (data.password) {
+    const password = await bcrypt.hash(data.password, 10);
 
-  await user.update({
-    ...data,
-    password,
-  });
+    await user.update(password);
+  }
+  await user.update(data);
 
   return res.json({
     status: "success",
