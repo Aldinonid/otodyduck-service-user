@@ -23,7 +23,7 @@ module.exports = (sequelize, DataType) => {
       },
       role: {
         type: DataType.ENUM,
-        values: ["teacher", "student"],
+        values: ["teacher", "student", "admin"],
         allowNull: false,
         defaultValue: "student",
       },
