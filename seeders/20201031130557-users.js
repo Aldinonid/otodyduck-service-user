@@ -9,7 +9,7 @@ module.exports = {
         {
           name: "Mentor",
           email: "mentor@gmail.com",
-          // password: await bcrypt.hash("mentor123", 10),
+          password: await bcrypt.hash("mentor123", 10),
           job: "Mentor Otodyduck",
           role: "teacher",
           created_at: new Date(),
