@@ -52,12 +52,12 @@ module.exports = async (req, res) => {
       .json({ status: "error", message: "Email already exist" });
   }
 
-  if (data.password) {
-    const password = await bcrypt.hash(data.password, 10);
+  const password = await bcrypt.hash(data.password, 10);
 
-    await user.update(password);
-  }
-  await user.update(data);
+  await user.update({
+    data,
+    password: password,
+  });
 
   return res.json({
     status: "success",
