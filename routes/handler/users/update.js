@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
       .json({ status: "error", message: "Email already exist" });
   }
 
-  const password = await bcrypt.hash(data.password, 10);
+  data.password = await bcrypt.hash(data.password, 10);
 
   await user.update({
     data,
