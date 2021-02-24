@@ -54,10 +54,7 @@ module.exports = async (req, res) => {
 
   data.password = await bcrypt.hash(data.password, 10);
 
-  await user.update({
-    data,
-    password: password,
-  });
+  await user.update(data);
 
   return res.json({
     status: "success",
